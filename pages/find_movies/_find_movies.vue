@@ -34,7 +34,7 @@
           </v-list-item-content>
         </template>
       </v-autocomplete>
-      <button type="button" @click="Search">Button</button>
+      <button type="button" @click="Search">🔍</button>
     </v-toolbar>
 
   <div>

@@ -17,7 +17,7 @@
           ></v-img>
         </template>
 
-        <button style="font-family: 'Tangerine', cursive; font-size:2.8em;">{{title}}</button>
+        <button style="font-family: 'Tangerine', cursive; font-size:2.5rem;">{{title}}</button>
 
         <v-spacer></v-spacer>
 
