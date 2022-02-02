@@ -62,9 +62,9 @@
         </v-row>
       </div>
 
-      <div v-else-if= "flag_4 === true">
+      <div v-else-if= "flag_4 === true" style="height:100vh; display:flex; align-items:center; justify-content:center;">
         <v-btn @click="finalAnswer()">
-            Do you end?
+            Are you ready?
         </v-btn>
       </div>
 
@@ -79,8 +79,8 @@
               >
                 <v-img :src="data.poster_path"></v-img>
               </v-avatar>
-            <div>
-              <v-card-title class="headline">
+            <div style="width:100%;" >
+              <v-card-title style="1rem"  class="text-left">
                 {{index+1}} : {{data.title}}
               </v-card-title>
               <v-card-subtitle v-text="data.id">

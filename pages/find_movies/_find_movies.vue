@@ -34,11 +34,21 @@
           </v-list-item-content>
         </template>
       </v-autocomplete>
-      <button type="button" @click="Search">🔍</button>
+      <v-btn 
+      depressed
+      elevation="2"
+      fab
+      icon
+      outlined
+      raised
+      rounded
+       @click="Search"
+       class="ml-5 mr-1"
+       style="font-size:1.5rem;">🔍</v-btn>
     </v-toolbar>
 
   <div>
-    <template v-if="(selectedMovie !== '') && (searchedMovie !== {})">
+    <template v-if= "(selectedMovie !== '' || selectedMovie !== null) && (searchedMovie !== {})">
     <v-card
       v-for="movie in searchedMovie"
       :key="movie.id"
@@ -81,53 +91,64 @@
         <div>{{movie.overview}}</div>
       </v-card-text>
       <v-divider class="mx-4"></v-divider>
-      <v-card-title>{{Casts_message}}</v-card-title>
-      <ul class="horizontal-list">
-        <li v-for="cast in movie.casts" :key="cast.id">
-          <v-card>
-             <v-avatar
-                class="ma-3"
-                size="100"
-                tile
-              >
-                <v-img :src="cast.profile_path"></v-img>
-              </v-avatar>
-              <v-card-title class="caption">
-                {{cast.name}} 
-                <br>
-                ({{cast.character}})
-              </v-card-title>
-          </v-card>
-        </li>
-      </ul>
+      <div v-if="movie.casts">
+        <v-card-title>{{Casts_message}}</v-card-title>
+        <ul class="horizontal-list">
+          <li v-for="cast in movie.casts" :key="cast.id">
+            <v-card>
+              <v-avatar
+                  class="ma-3"
+                  size="100"
+                  tile
+                >
+                  <v-img :src="cast.profile_path"></v-img>
+                </v-avatar>
+                <v-card-title class="caption">
+                  {{cast.name}} 
+                  <br>
+                  ({{cast.character}})
+                </v-card-title>
+            </v-card>
+          </li>
+        </ul>
+      </div>
+      <div v-else>
+        <v-card-title>{{movie.casts_error}}</v-card-title>
+      </div>
       <v-divider class="mx-4"></v-divider>
 
-      <v-card-title>{{Streaming_message}}</v-card-title>
-      <v-list
-        nav
-        dense
-      >
-        <v-list-item-group
-          color="primary"
+      <div v-if="movie.streaming">
+        <v-card-title>{{Streaming_message}}</v-card-title>
+        <v-list
+          nav
+          dense
         >
-          <v-list-item
-            v-for="(item, i) in movie.streaming"
-            :key="i"
+          <v-list-item-group
+            color="primary"
           >
-              <v-avatar
-                class="ma-3"
-                size="8%"
-                tile
-              >
-                <v-img :src="item.logo_path"></v-img>
-              </v-avatar>
+            <v-list-item
+              v-for="(item, i) in movie.streaming"
+              :key="i"
+            >
+                <v-avatar
+                  class="ma-3"
+                  size="8%"
+                  tile
+                >
+                  <v-img :src="item.logo_path"></v-img>
+                </v-avatar>
 
-            <v-list-item-content>
-              <v-list-item-title v-text="item.provider_name"></v-list-item-title>
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list>
+              <v-list-item-content>
+                <v-list-item-title v-text="item.provider_name"></v-list-item-title>
+              </v-list-item-content>
+            
+            </v-list-item>
+          </v-list-item-group>
+        </v-list>
+      </div>
+      <div v-else>
+        <v-card-title>{{movie.streaming_error}}</v-card-title>
+      </div>
       </div>
     </v-card>
   </template>
@@ -159,7 +180,7 @@ const language = '&language=ja-JA'
       streaming: {},
       casts: {},
       Casts_message: "Fascinating casts! 😆💫",
-      Streaming_message: "Tonight's abailable virtual theatre!"
+      Streaming_message: "Tonight's available virtual theatre!"
     }),
     watch: {
       model (val) {
@@ -209,10 +230,11 @@ const language = '&language=ja-JA'
                   for (let j = 0; j < this.searchedMovie[i].streaming.length; j++) {
                     this.searchedMovie[i].streaming[j].logo_path = "https://image.tmdb.org/t/p/w500" + this.searchedMovie[i].streaming[j].logo_path
                   }
-                  console.log(this.Streaming_message);}).catch((error) => {
-          console.log(error)
-          this.Streaming_message = "この映画に関するストリーミングサービスのデータはありません．(There is no abailable data. Sorry.)"
-        })
+                  console.log(this.Streaming_message);
+                  }).catch((error) => {
+                          console.log(error)
+                          this.$set(this.searchedMovie[i], 'streaming_error', "この映画に関するストリーミングサービスのデータはありません．(There is no abailable data. Sorry.)")
+                  })
 
               //👇Search Streaming available service in JP
               let cast_endpoint = "/movie/"+ this.searchedMovie[i].id + "/credits"
@@ -225,15 +247,13 @@ const language = '&language=ja-JA'
                   }
               //return content // 非同期通信なので、先に「return content」が走ってしまうため、''が表示される。
               }).catch((error) => {
-          console.log(error)
-          this.Casts_message = "この映画に関するキャストのデータはありません．(There is no abailable data. Sorry.)"
-        })
+            console.log(error)
+             this.$set(this.searchedMovie[i], 'casts_error', "この映画に関するキャストのデータはありません．(There is no abailable data. Sorry.)")
+          })
         }
         }).catch((error) => {
           console.log(error)
         })
-          
-
       }
     }
     // created () { 初めだけ
