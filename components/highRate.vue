@@ -18,8 +18,8 @@
               >
                 <v-img :src="data.poster_path"></v-img>
               </v-avatar>
-            <div>
-              <v-card-title class="headline">
+            <div style="width:100%;">
+              <v-card-title style="font-size:1rem;" class="text-left">
                 {{index+1}} : {{data.title}}
               </v-card-title>
               <v-card-subtitle v-text="data.id">
