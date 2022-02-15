@@ -1,22 +1,43 @@
 # my-movie-app
 
-## Visit below link
+## Visit below link in order to check demo
+
 https://saku-1101.herokuapp.com/
 
-## Build Setup
+## Preparation to build image & cerate container (Docker)
 
 ```bash
-# install dependencies
+# build image based on Dockerfile (First time only)
+$ docker build . -t my_movie_app
+
+# create contaner (First time only)
+$ docker run -dit --name my-movie-app -p 8080:80 my_movie_app
+
+# stop container (whenever you wanna stop it)
+$ docker stop my-movie-app
+
+# remove the container from your docker engine (optional) (prevent from overconsuming your computer's memory. Just a suggestion.)
+# Caution! : If you once execute this command, it's nessecary to rebuild from image using "docker build"
+$ docker rm my-movie-app
+
+# restart container (whenever you wanna restart it)
+$ docker start my-movie-app
+```
+
+## Build Setup (Nuxt)
+
+```bash
+# install dependencies (optional)
 $ npm install
 
-# serve with hot reload at localhost:3000
+# serve with hot reload at localhost:3000 (whenever you start)
 $ npm run dev
 
-# build for production and launch server
+# build for production and launch server (optional)
 $ npm run build
 $ npm run start
 
-# generate static project
+# generate static project (optional)
 $ npm run generate
 ```
 
@@ -69,8 +90,3 @@ More information about the usage of this directory in [the documentation](https:
 This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
 
 More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
-
-### `axios`
-
-In order to enable HTTP connection, we're using axios.
-npm install
