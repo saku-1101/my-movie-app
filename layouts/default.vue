@@ -1,5 +1,11 @@
 <template>
   <v-app dark>
+    <!-- <v-if ref =  "show === false">
+      <Loading />
+
+    </v-if> -->
+    <!-- <else>  -->
+      
       <v-app-bar
         style = "position: sticky;top: 0px; z-index:1;"
         color="#6A76AB"
@@ -60,16 +66,7 @@
         justify="center"
         no-gutters
       >
-        <v-btn
-          v-for="link in links"
-          :key="link"
-          color="white"
-          text
-          rounded
-          class="my-2"
-        >
-          {{ link }}
-        </v-btn>
+
         <v-col
           class="primary lighten-2 py-4 text-center white--text"
           cols="12"
@@ -79,16 +76,22 @@
       </v-row>
     </v-footer>
   </template>
+    <!-- </else> -->
   </v-app>
 </template>
 
 <script>
+import Loading from '~/components/LoadingBar.vue'
 export default {
+  components :{
+    Loading,
+  },
   data () {
     return {
       clipped: false,
       drawer: false,
       fixed: false,
+      // show: false,
       items: [
         {
           icon: 'mdi-apps',
@@ -107,13 +110,13 @@ export default {
       title: 'Moviefun🎥✨',
       links: ['/popular_movies']
     }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      this.$nuxt.$loading.start()
+      setTimeout(() => this.$nuxt.$loading.finish(), 500)
+    })
   }
 }
 </script>
-
-<style>
-/* .title {
-  font-family: 'Merienda One', cursive;
-} */
-</style>
 

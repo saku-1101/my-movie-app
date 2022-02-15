@@ -3,6 +3,11 @@ import colors from 'vuetify/es5/util/colors'
 export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
+  loadingIndicator: {
+    name: 'circle',
+    color: '#3B8070',
+    background: 'white'
+  },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - my-movie-app',
@@ -80,5 +85,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
+  },
+  // loading: '~/components/LoadingBar.vue'
+  loading: {
+    continuous: true,
+    color: 'blue',
+    height: '5px'
   }
 }
