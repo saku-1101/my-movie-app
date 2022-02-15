@@ -86,10 +86,10 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
-  // loading: '~/components/LoadingBar.vue'
-  loading: {
-    continuous: true,
-    color: 'blue',
-    height: '5px'
-  }
+  loading: '~/components/LoadingBar.vue',
+  // loading: {
+  //   continuous: true,
+  //   color: 'blue',
+  //   height: '5px'
+  // }
 }

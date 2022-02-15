@@ -1,7 +1,5 @@
 <template>
 <div>
-<!-- Loading square for squar.red network
-<span class="loader"><span class="loader-inner"></span></span> -->
   <v-container fluid>
       <v-row dense>
         <!-- *************************************************************** -->

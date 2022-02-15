@@ -2,6 +2,7 @@
   <div v-if="loading" class="loading-page">
     <div class="loading"></div>
   </div>
+  
 </template>
 <script>
   export default {
@@ -18,6 +19,7 @@
     },
   }
 </script>
+
 <style scoped>
   .loading-page {
     position: fixed;
@@ -32,14 +34,18 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: rgb(0, 0, 0);
+    width: 100vw;
+    height: 100vh;
   }
   .loading {
     display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 4px solid rgba(9, 133, 81, 0.705);
-    border-radius: 50%;
-    border-top-color: #158876;
+    width: 4rem;
+    height: 4rem;
+    border: 8px solid rgba(57, 52, 210, 0.848);
+    border-radius: 20%;
+    border-top-color: #9286f18f;
+    border-bottom-color: #9286f18f;
     animation: spin 1s ease-in-out infinite;
   }
   @keyframes spin {
