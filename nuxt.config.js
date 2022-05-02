@@ -6,7 +6,7 @@ export default {
   loadingIndicator: {
     name: 'circle',
     color: '#3B8070',
-    background: 'white'
+    background: 'black'
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -92,4 +92,9 @@ export default {
   //   color: 'blue',
   //   height: '5px'
   // }
+  server: {
+    host: '0.0.0.0', // デフォルト: localhost,
+    port: 3000 // デフォルト: 3000
+    // デフォルトでは、Nuxt の開発サーバーのホストは localhost（ホストマシン内からのみアクセス可能）です。アプリケーションを他のデバイスで確認するにはホストを修正する必要があります。
+  },
 }
