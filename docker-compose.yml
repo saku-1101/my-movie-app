@@ -1,13 +1,20 @@
+# docker-compose.yml 以外の名前を使用するときは-fオプションで指定する必要がある
 version: "3.9"
 #docker-composeで使用するバージョン
+#docker-compose --version( OR -v)
 services:
 # アプリケーションを動かすための各要素.ComposeFile内の各サービス名なので、わかりやすければなんでもいい
 # Service設定する際の項目について(https://qiita.com/yuta-ushijima/items/d3d98177e1b28f736f04#:~:text=%E3%81%84%E3%81%84%E3%81%A7%E3%81%99%E3%81%AD%E3%80%82-,Service%E8%A8%AD%E5%AE%9A%E3%81%99%E3%82%8B%E9%9A%9B%E3%81%AE%E9%A0%85%E7%9B%AE%E3%81%AB%E3%81%A4%E3%81%84%E3%81%A6,-Service%E3%81%AE%E5%86%85%E5%AE%B9)
   web:
-  # The web uses an image that’s built from the Dockerfile in the current directory.The web service uses an image that’s built from the Dockerfile in the current directory.
+  # The web uses an image that’s built from the Dockerfile in the current directory.
     build: .
+      # context: .
+      # dockerfile: Dockerfile
+      # . は同じディレクトリ
+      #👆ファイル名がDockerfileなら省略可能
     image: "node:16-alpine"
-    # image で Node.js 公式のイメージを指定している。コレにより node・npm コマンドが実行できる環境を用意している
+    #👆build: context: dockerfile:でイメージをDockerfileで指定しているので書かなくてもOK
+    # image で Node.js(version16) 公式のイメージをalpine上で立てるように指定している。コレにより node・npm コマンドが実行できる環境を用意している
     container_name: "my-movie-app"
     # docker start などする時にコンテナ ID ではなくこのコンテナ名を指定して操作できるようになる
     stdin_open: true
@@ -19,23 +26,21 @@ services:
       - NODE_ENV=production
       - HOST=0.0.0.0
       - CHOKIDAR_USEPOLLING=true
+    #ここで設定した環境変数はDockerコンテナ環境内で自由に使用可能
     volumes:
       - .:/app 
       - ~/.npmrc:/app/.npmrc
       #docker-cmpose.ymlを含むそれ以下のディレクトリを/app以下に配置
     ports: 
-      - "8080:3000"
+      - "5000:3000"
     # expose:
     #   - "8000"
+    
     command: "npm run dev"
+# docker-compose build -> イメージのビルド
+# docker-compose up -d(dettach) -> コンテナの起動（起動しているコンテナに変更を加えて再度立ち上げる時もこれ．一旦停止した後再起動してくれる）
+# docker-compose ps -> docker-composeで起動されたコンテナの実行状況確認（docker-compose.ymlで定義されているコンテナのみ出る）
+# 基本的に，複数コンテナにまたがる作業を実行させるときはdocker-composeコマンドを用いることが推奨される．（そうでない時はdockerコマンドでOK）
 
-# version: '3'
 
-# services:
-#   app:
-#     image: node:16-alpine
-#     container_name: node-container
-#     tty: true
-#     volumes:
-#       - ./src:/src
-#     working_dir: "/src"
+
